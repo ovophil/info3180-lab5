@@ -56,12 +56,21 @@ def login():
             flash('Logged in successfully.', 'success')
             
             next_page = request.args.get('next')
-            return redirect(next_page or url_for("secure") )
+            return redirect(next_page or url_for("secure_page") )
     
             # remember to flash a message to the user
             # they should be redirected to a secure-page route instead 
     flash_errors(form)
     return render_template("login.html", form=form)
+    
+
+@app.route('/logout')
+@login_required 
+def logout():
+    logout_user()
+    flash('logged out Successful.', 'success')
+    return redirect(url_for('home'))
+    
 
 # Flash errors from the form if validation fails
 def flash_errors(form):
